@@ -727,9 +727,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-const myTimeout = setTimeout(myGreeting, 2000);
+const myTimeout = setTimeout(myGreeting, 000);
 
-function myStopFunction() {
+function myGreeting() {
   info.innerHTML = "審核成功"
   clearTimeout(myTimeout);
 }
