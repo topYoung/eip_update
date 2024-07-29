@@ -738,6 +738,24 @@ let chValue = "Done"
 // console.log('changeValue=',changeValue)
 
 function changeValue() {
+
+    // https://eip.coolermaster.com/EasyFlow/A3SignHandler.ashx
+
+    let requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+
+    fetch("https://eip.coolermaster.com/EasyFlow/A3SignHandler.ashx?board=" + boardId, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+
+            console.log("eip_result==", result)
+
+            
+        })
+        .catch(error => console.log('error', error));
+
     // const columnId = 'status__1'; // 要更新的 column ID
     // const value = '5'; // 新的 column values
     let  columnId = ''; // 要更新的 column ID
@@ -766,7 +784,7 @@ function changeValue() {
         // if(n == 1){
         //     chValue = "Working on it"
         // }
-        // if(n==2){
+        // if(n=done=2){
         //     chValue = ""
         // }
         var query = `
