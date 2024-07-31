@@ -746,7 +746,7 @@ function changeValue() {
         redirect: 'follow'
     };
 
-    fetch("https://eip.coolermaster.com/EasyFlow/A3SignHandler.ashx?board=" + boardId, requestOptions)
+    fetch("https://eip.coolermaster.com/easyflow/mondayupdate.ashx?MondayId=" + boardId, requestOptions)
         .then(response => response.json())
         .then(result => {
 
