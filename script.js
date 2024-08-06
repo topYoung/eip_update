@@ -745,7 +745,7 @@ function changeValue() {
     console.log('url=',url)
 
     // 使用fetch发起GET请求
-    fetch(apiUrl)
+    fetch(apiUrl,{ mode: 'no-cors' })
         .then(response => {
             // 检查响应是否成功
             if (!response.ok) {
