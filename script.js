@@ -757,7 +757,7 @@ function changeValue() {
             console.log("update_data",data); // 打印获取到的数据
         })
         .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
+            console.log('There has been a problem with your fetch operation:', error);
         });
 
     // const columnId = 'status__1'; // 要更新的 column ID
