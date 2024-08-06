@@ -730,8 +730,8 @@ document.addEventListener('DOMContentLoaded', function() {
 const myTimeout = setTimeout(myGreeting, 2000);
 
 function myGreeting() {
-  info.innerHTML = "審核成功"
-  clearTimeout(myTimeout);
+    info.innerHTML = "審核成功"
+    clearTimeout(myTimeout);
 }
 
 let chValue = "Done"
@@ -741,53 +741,57 @@ function changeValue() {
 
     // https://eip.coolermaster.com/EasyFlow/A3SignHandler.ashx
 
-    let requestOptions = {
-        method: 'GET',
-        redirect: 'follow'
-    };
+    const apiUrl = 'https://eip.coolermaster.com/easyflow/A3SignHandler.ashx?MondayId='+ boardId;
+    console.log('url=',url)
 
-    fetch("https://eip.coolermaster.com/easyflow/mondayupdate.ashx?MondayId=" + boardId, requestOptions)
-        .then(response => response.json())
-        .then(result => {
-
-            console.log("eip_result==", result)
-
-            
+    // 使用fetch发起GET请求
+    fetch(apiUrl)
+        .then(response => {
+            // 检查响应是否成功
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json(); // 解析JSON格式的响应体
         })
-        .catch(error => console.log('error', error));
+        .then(data => {
+            console.log("update_data",data); // 打印获取到的数据
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
 
     // const columnId = 'status__1'; // 要更新的 column ID
     // const value = '5'; // 新的 column values
-    let  columnId = ''; // 要更新的 column ID
+    let columnId = ''; // 要更新的 column ID
     const tmp = allData.boards[0].columns
-    for(let j=0;j<tmp.length;j++){
-        if(tmp[j].title == "Status"){
+    for (let j = 0; j < tmp.length; j++) {
+        if (tmp[j].title == "Status") {
             columnId = tmp[j].id
         }
     }
 
-    console.log('columnId=',columnId)
+    console.log('columnId=', columnId)
     let itemId = ''
-    for(let k=0;k<itemList.length;k++){
-        if(itemList[k].name == "物料B"){
+    for (let k = 0; k < itemList.length; k++) {
+        if (itemList[k].name == "物料B") {
             itemId = itemList[k].id
         }
 
     }
 
-    console.log('itemId=',itemId)
+    console.log('itemId=', itemId)
     // for (let i = 0; i < filterID.length; i++) {
-        // let n = i % 3
-        // if(n == 0){
-        //     chValue = "Done"
-        // }
-        // if(n == 1){
-        //     chValue = "Working on it"
-        // }
-        // if(n=done=2){
-        //     chValue = ""
-        // }
-        var query = `
+    // let n = i % 3
+    // if(n == 0){
+    //     chValue = "Done"
+    // }
+    // if(n == 1){
+    //     chValue = "Working on it"
+    // }
+    // if(n=done=2){
+    //     chValue = ""
+    // }
+    var query = `
         mutation {
             change_simple_column_value (
             board_id: ${boardId}, 
@@ -798,35 +802,35 @@ function changeValue() {
             id
             }
         }`;
-        // let query2 = `
- // query {
- //    next_items_page (limit: 500, cursor: "${cursor}") {
- //    cursor
- //    items {
- //      id
- //      name
- //      column_values{
- //            id
- //            text
- //            value
- //          }
- //      }
- //    }   
- //  }
- // `;
+    // let query2 = `
+    // query {
+    //    next_items_page (limit: 500, cursor: "${cursor}") {
+    //    cursor
+    //    items {
+    //      id
+    //      name
+    //      column_values{
+    //            id
+    //            text
+    //            value
+    //          }
+    //      }
+    //    }   
+    //  }
+    // `;
 
-        fetch("https://api.monday.com/v2", {
-                method: 'post',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': apiKey
-                },
-                body: JSON.stringify({
-                    'query': query
-                })
+    fetch("https://api.monday.com/v2", {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': apiKey
+            },
+            body: JSON.stringify({
+                'query': query
             })
-            .then(res => res.json())
-            .then(res => console.log(JSON.stringify(res, null, 2)));
+        })
+        .then(res => res.json())
+        .then(res => console.log(JSON.stringify(res, null, 2)));
     // }
 
     //     const query = `
