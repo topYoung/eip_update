@@ -742,10 +742,10 @@ function changeValue() {
     // https://eip.coolermaster.com/EasyFlow/A3SignHandler.ashx
 
     const apiUrl = 'https://eip.coolermaster.com/easyflow/A3SignHandler.ashx?MondayId='+ boardId;
-    console.log('url=',url)
+    console.log('url=',apiUrl)
 
     // 使用fetch发起GET请求
-    fetch(apiUrl,{ mode: 'no-cors' })
+    fetch(apiUrl)
         .then(response => {
             // 检查响应是否成功
             if (!response.ok) {
