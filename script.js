@@ -118,7 +118,7 @@ async function fetchItems() {
     user = allData.me
     console.log('owner=', owner)
     console.log('user=', user)
-    
+
     // createCheckbox()
 
     return response.data.boards[0].items_page.items;
@@ -145,12 +145,12 @@ function checkUpdate() {
         if (itemList[k].name == "物料B") {
             itemId = itemList[k].id
             columnValue = itemList[k].column_values
-            console.log('columnValue000=',columnValue)
+            console.log('columnValue000=', columnValue)
             break
         }
 
     }
-    console.log('columnValue=',columnValue)
+    console.log('columnValue=', columnValue)
     for (let i = 0; i < columnValue.length; i++) {
         if (columnValue[i].id == columnId) {
             status = columnValue[i].text
@@ -164,16 +164,15 @@ function checkUpdate() {
     let of = false
     if (owner.length > 1) {
         for (let m = 0; m < owner.length; m++) {
-            console.log('user[0].name=',user.name)
-            console.log('user[0].id=',user.id)
+            console.log('user[0].name=', user.name)
+            console.log('user[0].id=', user.id)
             if (user.name == owner[m].name && user.id == owner[m].id) { of = true
                 break
             }
         }
 
     } else {
-        if (user.name == owner[0].name && user.id == owner[0].id) { 
-            of = true
+        if (user.name == owner[0].name && user.id == owner[0].id) { of = true
         }
     }
 
@@ -842,6 +841,43 @@ function changeValue() {
         })
         .then(data => {
             console.log("update_data", data); // 打印获取到的数据
+            const success = data.Success
+            const signStatus = data.SignStatus
+            if (success == true) {
+                if (signStatus == "Success") {
+                    var query = `
+                                mutation {
+                                change_simple_column_value (
+                                board_id: ${boardId}, 
+                                item_id: ${itemId}, 
+                                column_id: "${columnId}", 
+                                value: "${chValue}"
+                                ) {
+                                id
+                                }
+                            }`;
+
+
+                    fetch("https://api.monday.com/v2", {
+                            method: 'post',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': apiKey
+                            },
+                            body: JSON.stringify({
+                                'query': query
+                            })
+                        })
+                        .then(res => res.json())
+                        .then(res => {
+                            console.log(JSON.stringify(res, null, 2))
+                            info.innerHTML = "通過審核"
+                        });
+                }else{
+                    info.innerHTML = "尚未通過"
+                }
+            }
+
         })
         .catch(error => {
             console.log('There has been a problem with your fetch operation:', error);
@@ -851,31 +887,7 @@ function changeValue() {
 
 
 
-    var query = `
-        mutation {
-            change_simple_column_value (
-            board_id: ${boardId}, 
-            item_id: ${itemId}, 
-            column_id: "${columnId}", 
-            value: "${chValue}"
-            ) {
-            id
-            }
-        }`;
 
-
-    fetch("https://api.monday.com/v2", {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': apiKey
-            },
-            body: JSON.stringify({
-                'query': query
-            })
-        })
-        .then(res => res.json())
-        .then(res => console.log(JSON.stringify(res, null, 2)));
 
 }
 
