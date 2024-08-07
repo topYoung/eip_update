@@ -115,7 +115,7 @@ async function fetchItems() {
     itemCount = allData.boards[0].items_count
     cursor = allData.boards[0].items_page.cursor
     owner = allData.boards[0].owners
-    user = allData.boards[0].me
+    user = allData.me
     console.log('owner=', owner)
     console.log('user=', user)
     checkUpdate()
