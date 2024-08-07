@@ -164,15 +164,15 @@ function checkUpdate() {
     let of = false
     if (owner.length > 1) {
         for (let m = 0; m < owner.length; m++) {
-            console.log('user[0].name=',user[0].name)
-            console.log('user[0].id=',user[0].id)
-            if (user[0].name == owner[m].name && user[0].id == owner[m].id) { of = true
+            console.log('user[0].name=',user.name)
+            console.log('user[0].id=',user.id)
+            if (user.name == owner[m].name && user.id == owner[m].id) { of = true
                 break
             }
         }
 
     } else {
-        if (user[0].name == owner[0].name && user[0].id == owner[0].id) { 
+        if (user.name == owner[0].name && user.id == owner[0].id) { 
             of = true
         }
     }
