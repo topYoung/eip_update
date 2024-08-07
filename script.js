@@ -118,7 +118,7 @@ async function fetchItems() {
     user = allData.me
     console.log('owner=', owner)
     console.log('user=', user)
-    checkUpdate()
+    
     // createCheckbox()
 
     return response.data.boards[0].items_page.items;
@@ -233,6 +233,8 @@ async function getNextItem() {
         limit += 500
     } else {
         first = false
+        console("111111")
+        checkUpdate()
         // changeValue()
         // createImage()
     }
@@ -246,6 +248,8 @@ async function filterItems() {
         limit += 500
     } else {
         first = false
+        console("22222")
+        checkUpdate()
         // changeValue()
         // createImage()
     }
@@ -511,6 +515,8 @@ monday.listen("itemIds", (res) => {
     filterID = res.data
     console.log('first==', first)
     if (first == false) {
+        console("33333")
+        checkUpdate()
         // changeValue()
         // createImage()
     }
