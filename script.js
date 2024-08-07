@@ -145,11 +145,12 @@ function checkUpdate() {
         if (itemList[k].name == "物料B") {
             itemId = itemList[k].id
             columnValue = itemList[k].column_values
+            console.log('columnValue000=',columnValue)
             break
         }
 
     }
-
+    console.log('columnValue=',columnValue)
     for (let i = 0; i < columnValue.length; i++) {
         if (columnValue[i].id == columnId) {
             status = columnValue[i].text
