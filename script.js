@@ -876,6 +876,8 @@ function changeValue() {
                 }else{
                     info.innerHTML = "尚未通過"
                 }
+            }else{
+                info.innerHTML = "連線錯誤"
             }
 
         })
