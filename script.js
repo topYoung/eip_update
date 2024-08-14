@@ -628,30 +628,35 @@ function changeValue() {
                 }
 
                 console.log('columnId=', columnId)
-                let status = ''
-                let columnValue
-                for (let k = 0; k < itemList.length; k++) {
-                    if (itemList[k].name == rowName) {
-                        itemId = itemList[k].id
-                        columnValue = itemList[k].column_values
-                        console.log('columnValue000=', columnValue)
-                        break
+                if (columnId == "") {
+                    info.innerHTML = "查無審核項目"
+                } else {
+
+                    let status = ''
+                    let columnValue = []
+                    for (let k = 0; k < itemList.length; k++) {
+                        if (itemList[k].name == rowName) {
+                            itemId = itemList[k].id
+                            columnValue = itemList[k].column_values
+                            console.log('columnValue000=', columnValue)
+                            break
+                        }
+
+                    }
+                    console.log('columnValue=', columnValue)
+
+                    for (let i = 0; i < columnValue.length; i++) {
+                        if (columnValue[i].id == columnId) {
+                            status = columnValue[i].text
+                            break
+                        }
                     }
 
-                }
-                console.log('columnValue=', columnValue)
-                for (let i = 0; i < columnValue.length; i++) {
-                    if (columnValue[i].id == columnId) {
-                        status = columnValue[i].text
-                        break
-                    }
-                }
-
-                console.log('itemId=', itemId)
-                console.log('status=', status)
-                if (status != "Done") {
-                    if (signStatus == "Success") {
-                        var query = `
+                    console.log('itemId=', itemId)
+                    console.log('status=', status)
+                    if (status != "Done") {
+                        if (signStatus == "Success") {
+                            var query = `
                                 mutation {
                                 change_simple_column_value (
                                 board_id: ${boardId}, 
@@ -664,28 +669,28 @@ function changeValue() {
                             }`;
 
 
-                        fetch("https://api.monday.com/v2", {
-                                method: 'post',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization': apiKey
-                                },
-                                body: JSON.stringify({
-                                    'query': query
+                            fetch("https://api.monday.com/v2", {
+                                    method: 'post',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': apiKey
+                                    },
+                                    body: JSON.stringify({
+                                        'query': query
+                                    })
                                 })
-                            })
-                            .then(res => res.json())
-                            .then(res => {
-                                console.log(JSON.stringify(res, null, 2))
-                                info.innerHTML = "通過審核"
-                            });
+                                .then(res => res.json())
+                                .then(res => {
+                                    console.log(JSON.stringify(res, null, 2))
+                                    info.innerHTML = "通過審核"
+                                });
+                        } else {
+                            info.innerHTML = "尚未通過"
+                        }
                     } else {
-                        info.innerHTML = "尚未通過"
+                        info.innerHTML = "無須審核"
                     }
-                } else {
-                    info.innerHTML = "無須審核"
                 }
-
             } else {
                 info.innerHTML = "連線錯誤"
             }
