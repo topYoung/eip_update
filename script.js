@@ -3,6 +3,10 @@
 // let query = 'query { boards(ids: 6292532342 limit: 10) { columns{id title} items_page{ items{ name column_values{ id text value }}}}}';
 window.jsPDF = window.jspdf.jsPDF
 
+let width = window.innerWidth
+let height = window.innerHeight
+console.log('width=',width)
+console.log('height=',height)
 let title1 = ""
 let title2 = ""
 // console.log('title1==',title1)
@@ -153,7 +157,7 @@ function checkUpdate() {
         changeValue()
 
     } else {
-        info.innerHTML = "無權限"
+        info.innerHTML = "該項目無權限執行，請與執案PJM聯繫"
     }
 
 
@@ -629,7 +633,7 @@ function changeValue() {
 
                 console.log('columnId=', columnId)
                 if (columnId == "") {
-                    info.innerHTML = "查無審核項目"
+                    info.innerHTML = "查無A3審核項目"
                 } else {
 
                     let status = ''
@@ -682,13 +686,13 @@ function changeValue() {
                                 .then(res => res.json())
                                 .then(res => {
                                     console.log(JSON.stringify(res, null, 2))
-                                    info.innerHTML = "通過審核"
+                                    info.innerHTML = "此案A3通過審核，請接續專案開發流程"
                                 });
                         } else {
-                            info.innerHTML = "尚未通過"
+                            info.innerHTML = "此案A3尚未通過審核"
                         }
                     } else {
-                        info.innerHTML = "無須審核"
+                        info.innerHTML = "此案先前已完成A3審核，無須再次審核"
                     }
                 }
             } else {
