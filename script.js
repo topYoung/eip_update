@@ -604,7 +604,7 @@ function changeValue() {
         .then(response => {
             // 检查响应是否成功
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
             }
             return response.json(); // 解析JSON格式的响应体
         })
@@ -692,7 +692,11 @@ function changeValue() {
 
         })
         .catch(error => {
-            console.log('There has been a problem with your fetch operation:', error);
+            if (error instanceof SyntaxError) {
+                console.error('There has been a problem parsing JSON:', error);
+            } else {
+                console.error('There has been a problem with your fetch operation:', error.message);
+            }
         });
 
 
