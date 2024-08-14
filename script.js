@@ -127,41 +127,14 @@ async function fetchItems() {
 let columnId = ''
 let itemId = ''
 
+let of = false
+
 function checkUpdate() {
 
     // let columnId = ''; // 要更新的 column ID
-    const tmp = allData.boards[0].columns
-    for (let j = 0; j < tmp.length; j++) {
-        if (tmp[j].title == "Status") {
-            columnId = tmp[j].id
-            break
-        }
-    }
 
-    console.log('columnId=', columnId)
-    let status = ''
-    let columnValue
-    for (let k = 0; k < itemList.length; k++) {
-        if (itemList[k].name == "物料B") {
-            itemId = itemList[k].id
-            columnValue = itemList[k].column_values
-            console.log('columnValue000=', columnValue)
-            break
-        }
-
-    }
-    console.log('columnValue=', columnValue)
-    for (let i = 0; i < columnValue.length; i++) {
-        if (columnValue[i].id == columnId) {
-            status = columnValue[i].text
-            break
-        }
-    }
-
-    console.log('itemId=', itemId)
-    console.log('status=', status)
     // const status = allData
-    let of = false
+
     if (owner.length > 1) {
         for (let m = 0; m < owner.length; m++) {
             console.log('user[0].name=', user.name)
@@ -177,11 +150,8 @@ function checkUpdate() {
     }
 
     if ( of == true) {
-        if (status != "Done") {
-            changeValue()
-        } else {
-            info.innerHTML = "無須審核"
-        }
+        changeValue()
+
     } else {
         info.innerHTML = "無權限"
     }
@@ -617,6 +587,8 @@ let oldNum = 2
 // }
 
 let chValue = "Done"
+let rowName = ""
+let colName = ""
 // console.log('changeValue=',changeValue)
 
 function changeValue() {
@@ -641,8 +613,45 @@ function changeValue() {
             const success = data.Success
             const signStatus = data.SignStatus
             if (success == true) {
-                if (signStatus == "Success") {
-                    var query = `
+                rowName = data.RowName
+                colName = data.ColName
+                console.log('rowName=', rowName)
+                console.log('colName=', colName)
+                // rowName = '物料B'
+                // colName = 'Status'
+                const tmp = allData.boards[0].columns
+                for (let j = 0; j < tmp.length; j++) {
+                    if (tmp[j].title == colName) {
+                        columnId = tmp[j].id
+                        break
+                    }
+                }
+
+                console.log('columnId=', columnId)
+                let status = ''
+                let columnValue
+                for (let k = 0; k < itemList.length; k++) {
+                    if (itemList[k].name == rowName) {
+                        itemId = itemList[k].id
+                        columnValue = itemList[k].column_values
+                        console.log('columnValue000=', columnValue)
+                        break
+                    }
+
+                }
+                console.log('columnValue=', columnValue)
+                for (let i = 0; i < columnValue.length; i++) {
+                    if (columnValue[i].id == columnId) {
+                        status = columnValue[i].text
+                        break
+                    }
+                }
+
+                console.log('itemId=', itemId)
+                console.log('status=', status)
+                if (status != "Done") {
+                    if (signStatus == "Success") {
+                        var query = `
                                 mutation {
                                 change_simple_column_value (
                                 board_id: ${boardId}, 
@@ -655,25 +664,29 @@ function changeValue() {
                             }`;
 
 
-                    fetch("https://api.monday.com/v2", {
-                            method: 'post',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': apiKey
-                            },
-                            body: JSON.stringify({
-                                'query': query
+                        fetch("https://api.monday.com/v2", {
+                                method: 'post',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': apiKey
+                                },
+                                body: JSON.stringify({
+                                    'query': query
+                                })
                             })
-                        })
-                        .then(res => res.json())
-                        .then(res => {
-                            console.log(JSON.stringify(res, null, 2))
-                            info.innerHTML = "通過審核"
-                        });
-                }else{
-                    info.innerHTML = "尚未通過"
+                            .then(res => res.json())
+                            .then(res => {
+                                console.log(JSON.stringify(res, null, 2))
+                                info.innerHTML = "通過審核"
+                            });
+                    } else {
+                        info.innerHTML = "尚未通過"
+                    }
+                } else {
+                    info.innerHTML = "無須審核"
                 }
-            }else{
+
+            } else {
                 info.innerHTML = "連線錯誤"
             }
 
