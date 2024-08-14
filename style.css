@@ -155,7 +155,7 @@ body {
 
 #info{
     position: absolute;
-    left:calc(50vw - 150px);
+    left:calc(50vw - 200px);
     top:calc(50vh - 50px);
     width:400px;
     height:100px;
