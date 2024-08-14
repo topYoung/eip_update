@@ -158,6 +158,7 @@ function checkUpdate() {
 
     } else {
         info.innerHTML = "該項目無權限執行，請與執案PJM聯繫"
+        info.style.fontSize = "22px"
     }
 
 
@@ -687,12 +688,15 @@ function changeValue() {
                                 .then(res => {
                                     console.log(JSON.stringify(res, null, 2))
                                     info.innerHTML = "此案A3通過審核，請接續專案開發流程"
+                                    info.style.fontSize = "22px"
                                 });
                         } else {
                             info.innerHTML = "此案A3尚未通過審核"
+                            info.style.fontSize = "30px"
                         }
                     } else {
                         info.innerHTML = "此案先前已完成A3審核，無須再次審核"
+                        info.style.fontSize = "22px"
                     }
                 }
             } else {
