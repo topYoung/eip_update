@@ -687,11 +687,12 @@ function changeValue() {
                                 })
                                 .then(res => res.json())
                                 .then(res => {
-                                    console.log(JSON.stringify(res, null, 2))
-                                    let json = JSON.stringify(res, null, 2)
-                                    // let  error_message = ''
-                                    let error_message = json['error_message']
+                                    // console.log(JSON.stringify(res, null, 2))
+                                    let myJson = JSON.stringify(res, null, 2)
+                                    console.log("myJson=",myJson)
+                                    let error_message = myJson.error_message
                                     console.log('error_message = ',error_message)
+                                    
                                     if(error_message){
                                         info.innerHTML = error_message
                                         info.style.fontSize = "20px"
