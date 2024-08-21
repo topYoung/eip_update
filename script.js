@@ -689,11 +689,17 @@ function changeValue() {
                                 .then(res => {
                                     console.log(JSON.stringify(res, null, 2))
                                     let json = JSON.stringify(res, null, 2)
-                                    let  error_message = ''
-                                    error_message = json['error_message']
+                                    // let  error_message = ''
+                                    let error_message = json['error_message']
                                     console.log('error_message = ',error_message)
-                                    info.innerHTML = "此案A3通過審核，請接續專案開發流程"
-                                    info.style.fontSize = "20px"
+                                    if(error_message){
+                                        info.innerHTML = error_message
+                                        info.style.fontSize = "20px"
+                                    }else{
+                                        info.innerHTML = "此案A3通過審核，請接續專案開發流程"
+                                        info.style.fontSize = "20px"
+                                    }
+                                    
                                 });
                         } else {
                             info.innerHTML = "此案A3尚未通過審核"
