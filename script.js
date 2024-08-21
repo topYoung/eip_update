@@ -157,9 +157,9 @@ function checkUpdate() {
         changeValue()
 
     } else {
-        changeValue()
-        // info.innerHTML = "該項目無權限執行，請與執案PJM聯繫"
-        // info.style.fontSize = "20px"
+        // changeValue()
+        info.innerHTML = "該項目無權限執行，請與執案PJM聯繫"
+        info.style.fontSize = "20px"
     }
 
 
