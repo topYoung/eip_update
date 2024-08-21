@@ -690,7 +690,8 @@ function changeValue() {
                                     // console.log(JSON.stringify(res, null, 2))
                                     let myJson = JSON.stringify(res, null, 2)
                                     console.log("myJson=",myJson)
-                                    let error_message = myJson.error_message
+                                    let error_message = res.error_message; // 直接从响应对象中提取error_message
+    
                                     console.log('error_message = ',error_message)
                                     
                                     if(error_message){
