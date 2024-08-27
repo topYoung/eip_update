@@ -625,7 +625,7 @@ function changeValue() {
                 console.log('rowName=', rowName)
                 console.log('colName=', colName)
                 chValue = data.NewValue
-                // console.log('chValue=',chValue)
+                console.log('chValue=',chValue)
                 // rowName = '物料B'
                 // colName = 'Status'
                 const tmp = allData.boards[0].columns
